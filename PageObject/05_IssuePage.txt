@@ -1,0 +1,73 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+Documentation	Issue Test scenario. CRUD Operation: Create, Read, Update, Delete
+
+
+Pre Condition	Open Browrser, Login Gitlab
+Post Condition	Logout from Gitlab, Close All Browsers
+Tags Create, Read, Update, Delete, CRUD, Issue
+
+#******************* Common Variables ********************
+
+
+*** Variables ***
+
+IssuePageUrl = "https://gitlab.com/{jasminkeinonen}/{testi}/issues"
+Title = IssueName
+ProjectName = MySampleProject
+Type = Issue
+Descption = 'xxx'
+Invalid_Title = NewName
+EditName = NewName
+Empty = 
+
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+# Positive Test Cases
+
+	Test Case 1: Create issue
+    Navigate To Issue Page  IssuePageUrl
+	Verify Page Should Contain Issue page
+	Submit New Issue in ProjectName
+	Input Title Title
+	Input Type Type
+	Input Description
+	Submit Create Issue Form
+	Verify Page Should Contain Issue Page
+
+ 	Test Case 2: Update name of issue
+	Navigate To Issue Page  IssuePageUrl
+	Verify Page Should Contain Issue page
+	Submit Title
+	Navigate to Edit
+	Input EditName
+	Submit Save Changes
+	Verify Page Should Contain Issue Page
+
+Test Case 3: Create second issue with privious updated name
+ Navigate To Issue Page  IssuePageUrl
+	Verify Page Should Contain Issue page
+	Submit Title
+	Input Title EditName
+	Input Type Type
+	Input Description
+	Submit Create Issue Form
+	Verify Page Should Contain Issue Page
+
+
+	Test Case 4: Delete first issue
+	 Navigate To Issue Page  IssuePageUrl
+	Verify Page Should Contain Issue page
+	Submit Title
+	Navigate to Issue Actions
+	Submit Delete Issue
+	Verify That Popup window should show with the message 'Issue will be removed! Are you sure'.
+	Submit Delete Issue
+	Verify That Succesfull message should show 'The issue was successfully deleted. '
+	
+	

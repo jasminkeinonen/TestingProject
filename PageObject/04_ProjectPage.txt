@@ -1,0 +1,116 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+
+Documentation	Testing the Project creating functionality. Create a  Project scenario with valid and invalid credentials and other CRUD
+(Create, Read, Update, Delete) functions.
+
+
+Pre Condition	 Open Browrser, Login Gitlab
+Post Condition	Logout from Gitlab, Close All Browsers
+Tags Create, Read, Update, Delete, CRUD, Project Inventory
+
+#******************* Common Variables ********************
+
+*** Variables ***
+
+ProjectPageUrl = https://gitlab.com/dashboard/projects 
+ProjectName = MySampleProject
+ProjectURL = https://gitlab.com/sample8742149/
+ProjectSlug = my-sample-project
+Visibility = Private
+Template = iOS
+Invalid_ProjectName = MySampleProject
+Empty = 
+
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+# Positive Test Cases
+
+	Test Case 1 : Creating Blank Project With Valid Credential
+	Navigate To Project Page  ProjectPageUrl
+	Verify Page Should Contain Project page
+	Submit New Project
+	Submit Create Blank Project
+	Input ProjectName ProjectName
+	Input ProjectURL ProjectUrl
+	Input ProjectSlug ProjectSlug
+	Input Visibility Visibility
+	Submit Create Project Form
+	Verify Page Should Contain Project page
+
+
+	Test Case 2: Creating Template Project With Valid Credential
+	Navigate To Project Page  ProjectPageUrl
+	Verify Page Should Contain Project page
+	Submit New Project
+	Submit Create From Template
+	Input Template Template
+	Input ProjectName ProjectName
+	Input ProjectURL ProjectUrl
+	Input ProjectSlug ProjectSlug
+	Input Project Description
+	Input Visibility Visibility
+	Submit Create Project Form
+	Verify Page Should Contain Project page
+
+
+	Test Case 3: Updating Name Of Template Project With Valid Credential
+	Navigate To Project Page  ProjectPageUrl
+	Verify Page Should Contain Project page
+	Submit ProjectName
+	Submit Create From Template
+	Navigate To Project Settings
+	Verify Page Should Contain Project Settings
+	Input ProjectName ProjectName
+	Submit Save Changes Form
+	Verify Page Should Contain Project page
+
+
+	Test Case 4: Delete template project
+	Navigate To Project Page  ProjectPageUrl
+	Verify Page Should Contain Project page
+	Submit ProjectName
+	Submit Create From Template
+	Navigate To Project Settings
+	Verify Page Should Contain Project Settings
+	Navigate To Advanced Settings
+	Submit Delete Project
+	Verify That Popup window should show with the message 'Are you absolute sure?'
+	Input ProjectUrl
+	Submit Yes, Delete Project
+	Verify Page Should Contain Project page
+
+	
+	Test Case 5: Valide that message is showing Project 'First project ' was successfully created.
+	Navigate To Project Page  ProjectPageUrl
+	Verify Page Should Contain Project page
+	Submit New Project
+	Submit Create Blank Project
+	Input ProjectName FirstProject
+	Input ProjectURL ProjectUrl
+	Input ProjectSlug ProjectSlug
+	Input Visibility Visibility
+	Submit Create Project Form
+	Verify That Succesfull message should show 'First Project' was successfully created.
+
+
+# Negative Test Cases
+
+	Test Case 6: Create a blank project with the previous same name
+	Navigate To Project Page  ProjectPageUrl
+	Verify Page Should Contain Project page
+	Submit New Project
+	Submit Create Blank Project
+	Input ProjectName Invalid_ProjectName
+	Input ProjectURL ProjectUrl
+	Input ProjectSlug ProjectSlug
+	Input Visibility Visibility
+	Submit Create Project Form
+	Verify That Error message should show Path has already been taken.
+
+

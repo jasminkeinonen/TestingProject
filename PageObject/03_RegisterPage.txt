@@ -1,0 +1,94 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+
+Documentation	Testing the sign up functionality. Sign up scenario with valid and invalid credentials.
+
+
+Pre Condition	Open Browser
+Post Condition	Close All Browsers
+Tags SignUp
+
+#******************* Common Variables ********************
+
+*** Variables ***
+
+SignupUrl = https://gitlab.com/users/sign_up
+FirstName = XYZ
+LastName = XYZZZ
+UserName = XYY
+Email = XYX
+Password = ***
+Invalid_FirstName = XYZZ
+Invalid_LastName = XYZZZZ
+Invalid_UserName = XYYY
+Invalid_Email = XYXX
+Invalid_Password = ****
+Empty =
+
+
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+#Positive Test Cases 
+
+
+	Test Case 1: Login With Valid Credential
+    Navigate To Signup Page  SignupUrl
+    Input FirstName FirstName
+	Input LastName LastName
+	Input Username Username
+    Input Email  Email
+	Input Password Password
+    Submit Login Form
+    Verify Page Should Contain Welcome page	  
+
+
+# Negative Test Cases
+
+Test Case 2: Login With Invalid Credential
+    Navigate To Signup Page SignupUrl
+    Input FirstName FirstName
+	Input LastName LastName
+	Input Username Invalid_UserName
+    Input Email  Email
+	Input Password Password
+    Submit Signup Form
+    Verify That Error message should show This field is required	
+
+
+Test Case 3: Error message Should Be Visible After Invalid Login With Valid FirstName, LastName, UserName, Email And Invalid Password
+    Navigate To Signup Page  SignupUrl
+    Input FirstName FirstName
+	Input LastName LastName
+	Input Username UserName
+    Input Email  Email
+	Input Password Invalid_Password
+    Submit Login Form
+    Verify Page Should Contain Invalid login or password.  
+    	
+
+Test Case 4:Error message Should Be Visible After Invalid Login With Empty And Space
+    Navigate To Signup Page  SignupUrl
+    Input FirstName Empty
+	Input LastName Empty
+	Input Username Empty
+    Input Email  Empty
+	Input Password Empty
+    Submit Signup Form
+    Verify That Error message should show This field is required
+    
+Test Case 5:Error message Should Be Visible After Invalid Login With Invalid Username And Valid Password
+    Navigate To Signup Page  Signup
+    Input FirstName FirstName
+	Input LastName LastName
+	Input Username Invalid_UserName
+    Input Email  Email
+	Input Password Password
+    Submit Login Form
+    Verify Page Should Contain Invalid login or password.
+
+
